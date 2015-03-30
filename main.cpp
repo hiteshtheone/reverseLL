@@ -11,74 +11,93 @@
 #define N 10
 using namespace std;
 
-typedef struct node{
+/*typedef struct node{
     int val;
     struct node *next;
-}Node;
+}Node;*/
 
-void createLL(Node &aInNode);
-void printLL(Node lNode);
-Node *reverseLL(Node &head);
+class Node{
+    int val;
+    Node *next;
+    
+public:
+    int getVal(){
+        return val;
+    }
+    Node *getNext(){
+        return next;
+    }
+    void setVal(int aInVal){
+        val = aInVal;
+    }
+    void setNext(Node *aInNext){
+        next = aInNext;
+    }
+};
+
+void createLL(Node *aInNode);
+void printLL(Node *aInNode);
+Node *reverseLL(Node *head);
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
-    Node head;
+    Node *head = new Node;
     //create LL
     createLL(head);
     printf("Printing LL\n");
     printLL(head);
     Node *RevHead = reverseLL(head);
     printf("Printing Reversed LL\n");
-    printLL(*RevHead);
+    printLL(RevHead);
     return 0;
 }
 
-Node *reverseLL(Node &aInHead)
+Node *reverseLL(Node *aInHead)
 {
     Node *l,*r,*i;
-    i = &aInHead;
+    i = aInHead;
     l = NULL;
-    r = aInHead.next;
+    r = aInHead->getNext();
     while (r != NULL) {
         //cout << "i val = " << i->val << endl;
-        i->next = l;
+        i->setNext(l);
         l = i;
         i = r;
-        r = r->next;
+        r = r->getNext();
     }
-    i->next = l;
+    i->setNext(l);
     return i;
     
 }
 
 
-void createLL(Node &aInNode)
+void createLL(Node *aInNode)
 {
     int i;
     //aInNode = *(Node*)malloc(sizeof(Node));
-    aInNode.val = 10;
-    Node *lNode;
-    lNode = &aInNode;
+    aInNode->setVal(10);
+    Node *lNode = aInNode;
+    //lNode = &aInNode;
     for (i=1; i<N; i++) {
-        lNode->next = (Node *)malloc(sizeof(Node));
-        lNode = lNode->next;
+        lNode->setNext(new Node);
+        lNode = lNode->getNext();
         //lNode is now new Node
-        lNode->val = 3*i;
+        lNode->setVal(3*i);
    //     cout << "i = " << i << endl;
-        lNode->next = NULL;
+        lNode->setNext(NULL);
     }
     std::cout << "In createLL\n";
 }
 
-void printLL(Node aInNode)
+void printLL(Node *aInNode)
 {
     //int i=0;
-    Node *lNode = &aInNode;
+    Node *lNode = aInNode;
     while(lNode != NULL){
-        std::cout /*<< "i = " <<i << "Node Val= "*/<< lNode->val << "\t";
+        std::cout /*<< "i = " <<i << "Node Val= "*/<< lNode->getVal() << "\t";
         //i++;
-        lNode = lNode->next;
+        lNode = lNode->getNext();
     }
     std::cout << std::endl;
 }
